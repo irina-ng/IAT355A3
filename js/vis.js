@@ -8,8 +8,7 @@ async function fetchData() {
 
 fetchData().then(async (data) => {
 
-      // VISUAL #1
-  const vlSpec = vl
+ const vlSpec = vl
   .markBar()
   .data(data)
   
@@ -17,16 +16,32 @@ fetchData().then(async (data) => {
   vl.y().fieldN("Genre"),
   vl.x().fieldN("Platform"),
   vl.color().fieldN("Platform"),
-  vl.color().fieldQ("Global_Sales").scale({ domain: [0, 1] })
+  vl.color().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales").scale({ domain: [0, 100] })
 )
  .title({
-    text: 'Global Sales of Genres Across Platforms',
+    text: 'Visualization 1: Global Sales by Genre and Platform',
   })
     .width("container")
     .height(400)
     .toSpec();
 
-      // VISUAL #2
+           // VISUAL #2
+  const vlSpec2 = vl
+  .markLine()
+  .data(data)
+  .encode(
+    vl.x().fieldT("Year").title("Year"),
+    vl.y().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
+    vl.color().fieldN("Platform").title("Platform")
+  )
+  .title("Visualization 2: Sales Over Time by Platform and Genre")
+  .width("container")
+  .height(400)
+  .toSpec();
+
+
+
+      // VISUAL #3
   const vlSpec3 = vl
 .markBar()
   .data(data)
@@ -45,27 +60,14 @@ fetchData().then(async (data) => {
       vl.fieldQ("Sales")
     ])
   )
-  .title("Regional Sales by Platform")
+  .title("Visualization 3: Regional Sales vs. Platform")
 
 
     .width("container")
     .height(400)
     .toSpec();
 
-        // VISUAL #3
-  const vlSpec2 = vl
-  .markLine()
-  .data(data)
-  .encode(
-    vl.x().fieldT("Year").title("Year"),
-    vl.y().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
-    vl.color().fieldN("Platform").title("Platform")
-  )
-  .title("Regional Sales by Platform")
-  .width("container")
-  .height(400)
-  .toSpec();
-
+ 
 
     // VISUAL #4
 const vlSpec4 = vl
@@ -80,34 +82,12 @@ const vlSpec4 = vl
     vl.color().fieldN("Publisher")
   )
   .title({
-    text: "Global Sales by Selected Publishers Across Genres",
+    text: "Visualization 4:Global Sales by Publishers I Know Across Genres",
   })
-  .title("Regional Sales by Platform")
   .width("container")
   .height(400)
   .toSpec();
 
-
-        // VISUAL #4
-      const vlSpec5 = vl
-.markBar()
-  .data(data)
-  .transform(
-    vl.filter("indexof(['Nintendo','Sony','Electronic Arts','Ubisoft','Activision'], datum.Publisher) >= 0")
-  )
-  .encode(
-    vl.y().fieldN("Genre"),
-    vl.x().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
-    vl.color().fieldN("Publisher")
-  )
-  .title({
-    text: "Global Sales by Selected Publishers Across Genres",
-  })
-    .title("Regional Sales by Platform")
-  .width("container")
-  .height(400)
-  .toSpec();
- 
 
 
 
@@ -115,8 +95,7 @@ const vlSpec4 = vl
   render("#view", vlSpec);
   render("#view2", vlSpec2);
   render("#view3", vlSpec3);
-    render("#view4", vlSpec4);
-  render("#view5", vlSpec5);
+  render("#view4", vlSpec4);
 
 });
 
