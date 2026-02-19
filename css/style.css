@@ -11,6 +11,10 @@ body {
   width: 50%;
 }
 
+#a3Visuals{
+  display: flex;
+  justify-content: center;
+} 
 
 
 #view,

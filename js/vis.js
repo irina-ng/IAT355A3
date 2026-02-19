@@ -27,46 +27,40 @@ fetchData().then(async (data) => {
     .toSpec();
 
       // VISUAL #2
+  const vlSpec3 = vl
+.markBar()
+  .data(data)
+  .transform(
+    vl.fold(
+      ["NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales"]
+    ).as("Region", "Sales")
+  )
+  .encode(
+    vl.x().fieldN("Platform").title("Platform"),
+    vl.y().aggregate("sum").fieldQ("Sales").title("Total Sales"),
+    vl.color().fieldN("Region").title("Region"),  // <-- this creates the legend + scale
+    vl.tooltip([
+      vl.fieldN("Platform"),
+      vl.fieldN("Region"),
+      vl.fieldQ("Sales")
+    ])
+  )
+  .title("Regional Sales by Platform")
+
+
+    .width("container")
+    .height(400)
+    .toSpec();
+
+        // VISUAL #3
   const vlSpec2 = vl
-.markLine()
+  .markLine()
   .data(data)
   .encode(
     vl.x().fieldT("Year").title("Year"),
     vl.y().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
     vl.color().fieldN("Platform").title("Platform")
   )
-  .title("Global Video Game Sales Over Time by Platform")
-    .width("container")
-    .height(400)
-    .toSpec();
-
-        // VISUAL #3
-  const vlSpec3 = 
-  vl.layer(
-  [
-    vl.markLine({color: "blue"}).data(data)
-      .encode(
-        vl.x().fieldN("Platform").title("Platform"),
-        vl.y().aggregate("sum").fieldQ("NA_Sales").title("Total Sales"),
-      ),
-    vl.markLine({color: "green"}).data(data)
-      .encode(
-        vl.x().fieldN("Platform"),
-        vl.y().aggregate("sum").fieldQ("EU_Sales"),
-      ),
-    vl.markLine({color: "red"}).data(data)
-      .encode(
-        vl.x().fieldN("Platform"),
-        vl.y().aggregate("sum").fieldQ("JP_Sales"),
-      ),
-    vl.markLine({color: "orange"}).data(data)
-      .encode(
-        vl.x().fieldN("Platform"),
-        vl.y().aggregate("sum").fieldQ("Other_Sales"),
-      )
-  ]
-)
-  
   .title("Regional Sales by Platform")
   .width("container")
   .height(400)
@@ -75,33 +69,45 @@ fetchData().then(async (data) => {
 
     // VISUAL #4
 const vlSpec4 = vl
- .markCircle()
+.markBar()
   .data(data)
-  .encode(
-    vl.x().fieldT("Year").title("Year"),
-    vl.y().fieldN("Platform").title("Platform"),
-    vl.size().aggregate("sum").fieldQ("Global_Sales").title("Total Sales"),
-    vl.color().fieldN("Platform")
+  .transform(
+    vl.filter("indexof(['Nintendo','Sony','Electronic Arts','Ubisoft','Activision'], datum.Publisher) >= 0")
   )
-  .title("Platform Life Cycles: Sales (Circle Size = Sales)")
-    .width("container")
-    .height(400)
-    .toSpec();
+  .encode(
+    vl.y().fieldN("Genre"),
+    vl.x().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
+    vl.color().fieldN("Publisher")
+  )
+  .title({
+    text: "Global Sales by Selected Publishers Across Genres",
+  })
+  .title("Regional Sales by Platform")
+  .width("container")
+  .height(400)
+  .toSpec();
+
 
         // VISUAL #4
-const vlSpec5 = vl
-    .markCircle()
+      const vlSpec5 = vl
+.markBar()
   .data(data)
-  .encode(
-    vl.y().fieldN("Genre").title("Genre"),            // X-axis = Genre
-    vl.x().fieldN("Platform").title("Platform"),     // Y-axis = Platform
-    vl.size().aggregate("sum").fieldQ("Global_Sales").title("Total Sales"), // Circle size = sales
-    vl.color().fieldN("Platform").title("Platform")  // Color = Platform
+  .transform(
+    vl.filter("indexof(['Nintendo','Sony','Electronic Arts','Ubisoft','Activision'], datum.Publisher) >= 0")
   )
-  .title("Platform Contribution to Each Genre (Circle Size = Sales)")
+  .encode(
+    vl.y().fieldN("Genre"),
+    vl.x().aggregate("sum").fieldQ("Global_Sales").title("Total Global Sales"),
+    vl.color().fieldN("Publisher")
+  )
+  .title({
+    text: "Global Sales by Selected Publishers Across Genres",
+  })
+    .title("Regional Sales by Platform")
   .width("container")
-    .height(400)
-    .toSpec();
+  .height(400)
+  .toSpec();
+ 
 
 
 
@@ -111,9 +117,6 @@ const vlSpec5 = vl
   render("#view3", vlSpec3);
     render("#view4", vlSpec4);
   render("#view5", vlSpec5);
-  render("#view6", vlSpec6);
-  render("#view7", vlSpec7);
-    render("#view8", vlSpec8);
 
 });
 
