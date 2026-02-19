@@ -1,0 +1,43 @@
+/* Loading fonts in Regular */
+@font-face {
+    font-family: 'DMSans';
+    font-weight: 500;
+    font-style: normal;
+    src: url('../fonts/DMSans-Regular.ttf'), format('ttf');
+}
+
+/* Loading fonts in Bold */
+@font-face {
+    font-family: 'DMSans';
+    font-weight: 700;
+    font-style: normal;
+    src: url('../fonts/DMSans-Bold.ttf'), format('ttf');
+}
+
+/* Loading fonts in Semi-Bold */
+@font-face {
+    font-family: 'DMSans';
+    font-weight: 600;
+    font-style: normal;
+    src: url('../fonts/DMSans-SemiBold.ttf'), format('ttf');
+}
+
+h1{
+    font-family: "DMSans", sans-serif;
+    font-weight: bold;
+     padding-bottom:0;
+}
+
+h2{
+    font-family: "DMSans", sans-serif;
+    font-weight: 600;
+    padding-bottom:0;
+}
+
+
+
+body {
+    font-family: "DMSans", sans-serif;
+    font-weight: 500;
+    margin:2rem;
+}
