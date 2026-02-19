@@ -8,7 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite-api@5.6.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/font.css" />
+    
+
     <script>
       const options = {
         config: {
@@ -33,8 +36,17 @@
     </script>
     <style></style>
   </head>
+
+  <header>
+      <nav>
+        <a href="index.html"> Home</a>
+        <a href="visualizations.html"> SVG</a>
+           <a href="vis.html"> Visualizations</a>
+        <a href="https://www.linkedin.com/in/irina-ng-035a4b251/">LinkedIn</a>
+      </nav>
+    </header>
   <body>
-    <div>Visuals for Assignment 2</div>
+    <h1>Visuals for Assignment 2</h1>
     <div class="container">
       <!-- visualization goes into this div you can create multiple divs and give them IDs -->
       <div id="view"></div>
@@ -43,6 +55,6 @@
       <div id="view4"></div>
        <div id="view5"></div>
     </div>
-    <script type="module" src="vis.js"></script>
+    <script type="module" src="js/vis.js"></script>
   </body>
 </html>
